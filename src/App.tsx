@@ -1,11 +1,9 @@
 import React from 'react';
-
+import HomeLayout from 'layouts/Home'
 
 function App() {
   return (
-    <div className="App">
-     <h1>React</h1>
-    </div>
+    <HomeLayout/>
   );
 }
 
