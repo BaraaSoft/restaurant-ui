@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Breadcrumb} from 'antd';
-import {Header} from 'components'
+import {Header,ListView} from 'components'
 
 const {Content, Footer } = Layout;
 
@@ -15,7 +15,7 @@ const HomeLayout = (props:any):JSX.Element=>{
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 680 }}>
-                    Content
+                    <ListView/>
                 </div>
             </Content>
             <Footer style={{ textAlign: 'center',margin:0 }}>Restaurants Eval ©2022 Created by Baraa</Footer>
