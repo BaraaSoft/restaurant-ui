@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react';
-import { List,Avatar} from 'antd';
+import React,{useEffect,useState} from 'react';
+import { List,Avatar,Pagination} from 'antd';
 import { connect } from 'react-redux';
 import {
   fetchRestaurants
@@ -15,20 +15,6 @@ export interface ListViewProps{
     restaurants:IRestaurantsModel[] | any[];
 }
 
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
 
 function getRandomColor(){
     const colorList = ['#f56a00', '#7265e6', '#8b0000',
@@ -48,13 +34,19 @@ const CustomAvatar = ({title}:any)=>{
 }
 
 const ListView = (props:ListViewProps):JSX.Element=>{
+     const [page, setPage] = useState(1)
     const { fetchRestaurants,restaurants } = props
     useEffect(()=>{
-        fetchRestaurants(1)
+        fetchRestaurants(page);
+    },[])
 
-    },[restaurants])
+    const onPageChange = (pageNum:number, pageSize:number)=>{
+        fetchRestaurants(pageNum)
+        setPage(pageNum)
+    }
     return (
-         <List
+        <>
+         <List style={{flex:1}}
             itemLayout="horizontal"
             dataSource={restaurants}
             renderItem={(item)=>
@@ -67,6 +59,15 @@ const ListView = (props:ListViewProps):JSX.Element=>{
                 </List.Item>)
             }
            />
+            <Pagination
+                style={{ marginTop: '12px',alignSelf:'center' }}
+                size="default"
+                defaultPageSize={9}
+                defaultCurrent={1}
+                total={restaurants.length}
+                onChange={onPageChange} />
+
+        </>
     )
 }
 
