@@ -18,3 +18,7 @@ export interface IAction<T>{
     payload:T
     type:any
 }
+
+export interface IReducer{
+    restaurants:IRestaurantsModel[]
+}
