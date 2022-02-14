@@ -52,7 +52,7 @@ const ListView = (props:ListViewProps):JSX.Element=>{
             itemLayout="horizontal"
             dataSource={restaurants.filter(x=>x.pageNum == page)}
             renderItem={(item)=>
-                (<List.Item>
+                (<List.Item key={item.id} >
                     <List.Item.Meta
                         avatar={<CustomAvatar title={item.name}/>}
                         title={item.name}

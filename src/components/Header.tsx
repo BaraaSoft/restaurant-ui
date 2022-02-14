@@ -1,5 +1,11 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { PageHeader,Input,Select,TimePicker} from 'antd';
+import { connect } from 'react-redux';
+import {
+    IReducer,
+    IRestaurantsModel,IPageable
+} from 'types';
+import {fetchRestaurantsByName,fetchRestaurants} from 'actions'
 
 const {Search} = Input;
 const { Option } = Select;
@@ -21,9 +27,37 @@ const renderOptions = (options:any[])=>{
     })
 }
 
-const Header = (props:any):JSX.Element=>{
-    const onSearch = (e:any)=>{
+export interface HeaderProps{
+    fetchRestaurantsByName:(pageNum:number,queryStr:string)=>void;
+    fetchRestaurants:(pageNum:number)=>void;
+}
 
+const Header = (props:HeaderProps):JSX.Element=>{
+    const [searchTerm,setSearch] =useState<string|null>(null);
+    const [timeRange,setTimeRange]=useState<string[] | null>();
+    const [day,setDay] = useState<string>('Mon')
+    const {fetchRestaurantsByName,fetchRestaurants } = props
+    const onSearch = (searchQuery:any)=>{
+        setSearch(searchQuery)
+        if(searchQuery){
+           fetchRestaurantsByName(1,searchQuery)
+        }else{
+            if(!timeRange){
+                fetchRestaurants(1)
+            }else{
+
+            }
+        }
+    }
+    const onTimeSelect = (date:any, timeStrArr: string[])=>{
+        if(!date) setTimeRange(null)
+        else{
+            setTimeRange(timeStrArr)
+        }
+    }
+
+    const onDaySelect = (e:string)=>{
+        setDay(e)
     }
     return (
           <PageHeader
@@ -33,10 +67,11 @@ const Header = (props:any):JSX.Element=>{
                  extra={[
                       <Input.Group compact>
                           
-                        <Select defaultValue="Mon">
+                        <Select onSelect={onDaySelect} defaultValue="Mon">
                             {renderOptions(options)}
                          </Select>
                           <TimePicker.RangePicker
+                            onChange={onTimeSelect}
                             placeholder={["from","to"]}
                           />
                           <Search
@@ -53,4 +88,12 @@ const Header = (props:any):JSX.Element=>{
     );
 }
 
-export default Header;
+
+const mapStateToProps = ({restaurants,pages}:IReducer) => {
+    const {homePage} = pages
+    return { restaurants,homePage }
+}
+
+export default connect(mapStateToProps, {fetchRestaurantsByName,fetchRestaurants})(Header)
+
+
