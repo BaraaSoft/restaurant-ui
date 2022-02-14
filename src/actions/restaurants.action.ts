@@ -1,14 +1,26 @@
 import ActionType from 'actions/actionType';
-import axios from 'https';
+import axiosRequest from 'webClient';
 import {Action} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {IRestaurantsModel} from 'types';
+import {IRestaurantsModel,IPageable} from 'types';
 import {AxiosResponse} from 'axios'
+import {getPageInfo}from 'utils';
+import  _ from 'lodash'
 
 
 
-export const fetchRestaurants = (pageNum:number) => async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>): Promise<Action> => {
-    const response:any = await axios.get(`/restaurants`);
-    console.log("restaurants:", response)
-   return dispatch({ type: ActionType.AllRestaurants, payload:response?.data  })
+
+const _fetchRestaurants = _.memoize(
+    async (pageNum:number,dispatch:ThunkDispatch<IRestaurantsModel, void, Action>)=>{
+        const response:any = await axiosRequest({page:pageNum,size:9}).get(`/restaurants`);
+        const restaurantsList = response?.data?.content?.map((item:IRestaurantsModel)=>({...item,pageNum}));
+        const homePageable = getPageInfo(response?.data)
+        dispatch({type: ActionType.HomePageMetaData, payload:homePageable})
+        dispatch({ type: ActionType.AllRestaurants, payload:restaurantsList })
+    }
+)
+
+
+export const fetchRestaurants = (pageNum:number) => async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>,getState:any) => {
+    _fetchRestaurants(pageNum,dispatch)
 }
