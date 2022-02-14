@@ -20,6 +20,8 @@ const _fetchRestaurants = _.memoize(
     }
 )
 
+let lastReqArgs:any = [];
+let lastReqAction = ActionType.AllRestaurants;
 
 
 export const fetchRestaurants = (pageNum:number) => async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>,getState:any) => {
@@ -30,6 +32,7 @@ export const fetchRestaurantsByName = (pageNum:number,name:string) => async (dis
     if(pageNum == 1 || !name){
         await dispatch({type:ActionType.ClearList,payload:[]})
     }
+     lastReqArgs = [name];
     const response:any = await axiosRequest({
         page:pageNum,size:9,startWith:name
     }).get(`/restaurants`);
@@ -45,6 +48,7 @@ export const fetchRestaurantsByTime = (pageNum:number,day:string,fromTime:string
     if(pageNum == 1 || !fromTime){
         await dispatch({type:ActionType.ClearList,payload:[]})
     }
+    lastReqArgs = [day,fromTime,toTime];
     const response:any = await axiosRequest({
         page:pageNum,size:9,from:fromTime,to:toTime,day:day
     }).get(`/restaurants`);
@@ -53,4 +57,19 @@ export const fetchRestaurantsByTime = (pageNum:number,day:string,fromTime:string
     console.log("restaurantsList",{restaurantsList})
     dispatch({type: ActionType.HomePageMetaData, payload:homePageable})
     dispatch({ type: ActionType.RestaurantsStartsWithName, payload:restaurantsList })
+}
+
+
+export const fetchNextPage = (pageNum:number)=> async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>,getState:any)=> {
+    switch(lastReqAction){
+        case ActionType.AllRestaurants:
+            dispatch(fetchRestaurants.apply(null,[pageNum]))
+            break;
+         case ActionType.RestaurantsStartsWithName:
+             let arg = Object.values([pageNum,...lastReqArgs]) as [number,string]
+             dispatch(fetchRestaurantsByName.apply(null,arg))
+             break;
+        default:
+        
+    }
 }

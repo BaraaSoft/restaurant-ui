@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import { List,Avatar,Pagination} from 'antd';
 import { connect } from 'react-redux';
 import {
-  fetchRestaurants
+  fetchRestaurants,fetchNextPage
 } from 'actions';
 import {
     IReducer,
@@ -12,6 +12,7 @@ import {
 
 export interface ListViewProps{
     fetchRestaurants:(page:number)=>void;
+    fetchNextPage:(page:number)=>void;
     restaurants:IRestaurantsModel[] | any[];
     homePage:IPageable
 }
@@ -37,13 +38,14 @@ const CustomAvatar = ({title}:any)=>{
 const ListView = (props:ListViewProps):JSX.Element=>{
     const [page, setPage] = useState(props.homePage?.number || 1);
     
-    const { fetchRestaurants,restaurants } = props
+    const { fetchRestaurants,fetchNextPage,restaurants } = props
     useEffect(()=>{
         fetchRestaurants(page);
     },[])
 
     const onPageChange = (pageNum:number, pageSize:number)=>{
-        fetchRestaurants(pageNum)
+        // fetchRestaurants(pageNum)
+        fetchNextPage(pageNum);
         setPage(pageNum)
     }
     return (
@@ -79,5 +81,5 @@ const mapStateToProps = ({restaurants,pages}:IReducer) => {
     return { restaurants,homePage }
 }
 
-export default connect(mapStateToProps, {fetchRestaurants})(ListView)
+export default connect(mapStateToProps, {fetchRestaurants,fetchNextPage})(ListView)
 
