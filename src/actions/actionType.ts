@@ -1,4 +1,6 @@
 export default {
     AllRestaurants:"AllRestaurants",
-    HomePageMetaData:"HomePageMetaData"
+    HomePageMetaData:"HomePageMetaData",
+    RestaurantsStartsWithName:"RestaurantsStartsWithName",
+    ClearList:"ClearList"
 }
