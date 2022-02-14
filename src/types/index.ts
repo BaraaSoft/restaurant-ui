@@ -2,6 +2,7 @@ export interface IRestaurantsModel{
     id:number;
     name:string;
     schedules?:ISchedules[]
+    pageNum?:number
 }
 
 export type WeekDay = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
@@ -21,4 +22,18 @@ export interface IAction<T>{
 
 export interface IReducer{
     restaurants:IRestaurantsModel[]
+    pages:IPage
+}
+
+export interface IPage{
+    homePage:IPageable;
+    favouritePage:IPageable;
+}
+
+export interface IPageable{
+    number:number;
+    numberOfElements:number;
+    totalElements:number;
+    totalPages:number;
+    size:number;
 }

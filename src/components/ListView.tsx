@@ -6,13 +6,14 @@ import {
 } from 'actions';
 import {
     IReducer,
-    IRestaurantsModel
+    IRestaurantsModel,IPageable
 } from 'types';
 
 
 export interface ListViewProps{
     fetchRestaurants:(page:number)=>void;
     restaurants:IRestaurantsModel[] | any[];
+    homePage:IPageable
 }
 
 
@@ -34,7 +35,8 @@ const CustomAvatar = ({title}:any)=>{
 }
 
 const ListView = (props:ListViewProps):JSX.Element=>{
-     const [page, setPage] = useState(1)
+    const [page, setPage] = useState(props.homePage?.number || 1);
+    
     const { fetchRestaurants,restaurants } = props
     useEffect(()=>{
         fetchRestaurants(page);
@@ -48,7 +50,7 @@ const ListView = (props:ListViewProps):JSX.Element=>{
         <>
          <List style={{flex:1}}
             itemLayout="horizontal"
-            dataSource={restaurants}
+            dataSource={restaurants.filter(x=>x.pageNum == page)}
             renderItem={(item)=>
                 (<List.Item>
                     <List.Item.Meta
@@ -62,9 +64,9 @@ const ListView = (props:ListViewProps):JSX.Element=>{
             <Pagination
                 style={{ marginTop: '12px',alignSelf:'center' }}
                 size="default"
-                defaultPageSize={9}
-                defaultCurrent={1}
-                total={restaurants.length}
+                defaultPageSize={props.homePage?.size || 9}
+                defaultCurrent={page}
+                total={props.homePage?.totalElements}
                 onChange={onPageChange} />
 
         </>
@@ -72,9 +74,9 @@ const ListView = (props:ListViewProps):JSX.Element=>{
 }
 
 
-const mapStateToProps = ({restaurants}:IReducer) => {
-    
-    return { restaurants }
+const mapStateToProps = ({restaurants,pages}:IReducer) => {
+    const {homePage} = pages
+    return { restaurants,homePage }
 }
 
 export default connect(mapStateToProps, {fetchRestaurants})(ListView)
