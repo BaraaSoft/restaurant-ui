@@ -44,7 +44,6 @@ const ListView = (props:ListViewProps):JSX.Element=>{
     },[])
 
     const onPageChange = (pageNum:number, pageSize:number)=>{
-        // fetchRestaurants(pageNum)
         fetchNextPage(pageNum);
         setPage(pageNum)
     }

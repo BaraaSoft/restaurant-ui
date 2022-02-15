@@ -5,7 +5,7 @@ import {
     IReducer,
     IRestaurantsModel,IPageable
 } from 'types';
-import {fetchRestaurantsByName,fetchRestaurants} from 'actions'
+import {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime} from 'actions'
 
 const {Search} = Input;
 const { Option } = Select;
@@ -29,6 +29,7 @@ const renderOptions = (options:any[])=>{
 
 export interface HeaderProps{
     fetchRestaurantsByName:(pageNum:number,queryStr:string)=>void;
+    fetchRestaurantsByTime:(pageNum:number,day:string,fromTime:string,toTime:string)=>void;
     fetchRestaurants:(pageNum:number)=>void;
 }
 
@@ -36,16 +37,18 @@ const Header = (props:HeaderProps):JSX.Element=>{
     const [searchTerm,setSearch] =useState<string|null>(null);
     const [timeRange,setTimeRange]=useState<string[] | null>();
     const [day,setDay] = useState<string>('Mon')
-    const {fetchRestaurantsByName,fetchRestaurants } = props
+    const {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime } = props
     const onSearch = (searchQuery:any)=>{
         setSearch(searchQuery)
         if(searchQuery){
            fetchRestaurantsByName(1,searchQuery)
         }else{
-            if(!timeRange){
-                fetchRestaurants(1)
+           
+            if(timeRange){
+                fetchRestaurantsByTime(1,day,timeRange[0],timeRange[1])
             }else{
-
+                 console.log({searchQuery,timeRange})
+                fetchRestaurants(1)
             }
         }
     }
@@ -94,6 +97,6 @@ const mapStateToProps = ({restaurants,pages}:IReducer) => {
     return { restaurants,homePage }
 }
 
-export default connect(mapStateToProps, {fetchRestaurantsByName,fetchRestaurants})(Header)
+export default connect(mapStateToProps, {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime})(Header)
 
 

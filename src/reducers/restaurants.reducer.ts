@@ -11,6 +11,7 @@ export const restaurants = (state = [], action:IAction<IRestaurantsModel[]>) => 
         case ActionType.AllRestaurants:
             return _.uniqBy([...state,...action.payload], "id");
         case ActionType.RestaurantsStartsWithName:
+        case ActionType.RestaurantsWithTimeRange:
             return _.uniqBy([...state,...action.payload], "id");
         case ActionType.ClearList:
             return[]
