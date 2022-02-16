@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
-import { List,Avatar,Pagination} from 'antd';
+import { List,Avatar,Pagination,Popover,Button} from 'antd';
+import { StarOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import {
   fetchRestaurants,fetchNextPage
@@ -16,6 +17,7 @@ export interface ListViewProps{
     restaurants:IRestaurantsModel[] | any[];
     homePage:IPageable
 }
+
 
 
 function getRandomColor(){
@@ -37,6 +39,7 @@ const CustomAvatar = ({title}:any)=>{
 
 const ListView = (props:ListViewProps):JSX.Element=>{
     const [page, setPage] = useState(props.homePage?.number || 1);
+    const [showPopover, setPopOver]= useState<{[key:string]:boolean}>({"1":false});
     
     const { fetchRestaurants,fetchNextPage,restaurants } = props
     useEffect(()=>{
@@ -54,11 +57,25 @@ const ListView = (props:ListViewProps):JSX.Element=>{
             dataSource={restaurants.filter(x=>x.pageNum == page)}
             renderItem={(item)=>
                 (<List.Item key={item.id} >
+                    
                     <List.Item.Meta
                         avatar={<CustomAvatar title={item.name}/>}
                         title={item.name}
-                        description="This is eval restaurant"
-                    />
+                        description="This is eval restaurant"/>
+                    
+                     <div style={{flex:4}}></div>
+ 
+                    <Popover
+                        style={{width:"200px"}}
+                        placement="leftTop"
+                        content={<a onClick={()=>setPopOver({...showPopover,[item.id]:false})}>Close</a>}
+                        title="Add to favourites"
+                        trigger="click"
+                        visible={showPopover[item.id] || false}
+                        onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}>
+                       <Button type="ghost" shape="circle" icon={<StarOutlined/>}></Button>
+                     </Popover>
+                    
                 </List.Item>)
             }
            />

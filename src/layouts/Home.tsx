@@ -14,7 +14,7 @@ const HomeLayout = (props:any):JSX.Element=>{
                 <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                 </Breadcrumb>
-                <div className="site-layout-background" style={{ padding: 24, height: 740,display:'flex',flexDirection:'column', }}>
+                <div className="site-layout-background" style={{ padding: 24, height: 750,display:'flex',flexDirection:'column', }}>
                     <ListView/>
                 </div>
             </Content>

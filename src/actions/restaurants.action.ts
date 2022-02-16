@@ -43,12 +43,11 @@ export const fetchRestaurantsByName = (pageNum:number,name:string) => async (dis
     }).get(`/restaurants`);
     const restaurantsList = response?.data?.content?.map((item:IRestaurantsModel)=>({...item,pageNum}));
     const homePageable = getPageInfo(response?.data)
-    console.log("restaurantsList",{restaurantsList})
     dispatch({type: ActionType.HomePageMetaData, payload:homePageable})
     dispatch({ type: ActionType.RestaurantsStartsWithName, payload:restaurantsList })
 }
 
-//todo
+
 export const fetchRestaurantsByTime = (pageNum:number,day:string,fromTime:string,toTime:string) => async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>,getState:any) => {
     if(pageNum == 1 || !fromTime){
         await dispatch({type:ActionType.ClearList,payload:[]})
@@ -59,9 +58,7 @@ export const fetchRestaurantsByTime = (pageNum:number,day:string,fromTime:string
         page:pageNum,size:9,from:fromTime,to:toTime,day:day
     }).get(`/restaurants`);
     const restaurantsList = response?.data?.content?.map((item:IRestaurantsModel)=>({...item,pageNum}));
-    console.log(response.data)
     const homePageable = getPageInfo(response?.data)
-    console.log("restaurantsList",{restaurantsList})
     dispatch({type: ActionType.HomePageMetaData, payload:homePageable})
     dispatch({ type: ActionType.RestaurantsWithTimeRange, payload:restaurantsList })
 }
