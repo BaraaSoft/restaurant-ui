@@ -54,6 +54,7 @@ const ListView = (props:ListViewProps):JSX.Element=>{
         <>
          <List style={{flex:1}}
             itemLayout="horizontal"
+            loading={restaurants.filter(x=>x.pageNum == page).length == 0}
             dataSource={restaurants.filter(x=>x.pageNum == page)}
             renderItem={(item)=>
                 (<List.Item key={item.id} >
