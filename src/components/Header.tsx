@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { PageHeader,Input,Select,TimePicker} from 'antd';
+import { PageHeader,Input,Select,TimePicker,Button} from 'antd';
 import { connect } from 'react-redux';
 import {
     IReducer,
@@ -84,8 +84,10 @@ const Header = (props:HeaderProps):JSX.Element=>{
                             allowClear
                             enterButton="Search"
                             onSearch={onSearch}/>
-                           
-                      </Input.Group>
+                            <Button type="dashed" style={{marginLeft:10}} >Favourites</Button>
+                      </Input.Group>,
+                    
+                      
     
                  ]}/>
     );
