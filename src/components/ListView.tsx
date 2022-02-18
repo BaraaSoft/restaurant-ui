@@ -70,7 +70,7 @@ const ListView = (props:ListViewProps):JSX.Element=>{
                         restaurant={item}  
                         visible={showPopover[item.id] || false}
                         onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}
-                        onClose={(e)=>setPopOver({...showPopover,[item.id]:false})} />
+                        onDone={(e)=>setPopOver({...showPopover,[item.id]:false})} />
 
                     {/* <Popover
                         style={{width:"200px"}}

@@ -7,7 +7,7 @@ import {
     IRestaurantsModel
 } from 'types';
 import { StarOutlined } from '@ant-design/icons';
-import {fetchFavGroups} from 'actions';
+import {fetchFavGroups,addFavouriteItem} from 'actions';
 
 const {Search} = Input;
 const { Option } = Select;
@@ -15,17 +15,18 @@ const { Option } = Select;
 
 export interface FavPopupProps{
     restaurant:IRestaurantsModel;
-    onClose:(e:IRestaurantsModel)=>void;
+    onDone:(e:IRestaurantsModel)=>void;
     onVisibleChange:(e:any)=>void;
     visible:boolean;
     fetchFavGroups:(userId?:number)=>void;
     favouriteGroups?:IFavouriteModel[]
+    addFavouriteItem?:(restaurant:IRestaurantsModel,favGrpId:number,userId?:number)=>void
 }
 
 const FavPopup = (props:FavPopupProps):JSX.Element =>{
 
-    const {restaurant,onClose,onVisibleChange,visible} = props
-    const {fetchFavGroups,favouriteGroups} = props
+    const {restaurant,onDone,onVisibleChange,visible} = props
+    const {fetchFavGroups,favouriteGroups,addFavouriteItem} = props
 
     const [selectedGroup,setSelectedGroup] = useState<IFavouriteModel[]>()
 
@@ -34,9 +35,19 @@ const FavPopup = (props:FavPopupProps):JSX.Element =>{
     },[])
 
     const handleChange = (selItems:any) => setSelectedGroup(selItems)
-
-    
     const filteredOptions = favouriteGroups?.filter(o => !selectedGroup?.map(x=>x.id).includes(o.id));
+
+    const handleAddToFav = ()=>{
+        if(favouriteGroups){
+            for(let grp of favouriteGroups){
+                addFavouriteItem?.call(null,restaurant,grp.id)
+            }
+        }
+        
+        
+        onDone.bind(null,restaurant);
+    }
+
     const renderContent = ()=>{
         return(
             <div style={{minWidth:'340px',minHeight:'80px'}} >
@@ -54,7 +65,7 @@ const FavPopup = (props:FavPopupProps):JSX.Element =>{
                     ))}
                 </Select>
                 <div style={{display:'flex',justifyContent:'end',marginTop:'24px'}}>
-                     <Button onClick={onClose.bind(null,restaurant)} size="middle" type="primary" shape="default">ADD</Button>
+                     <Button onClick={handleAddToFav} size="middle" type="primary" shape="default">ADD</Button>
                 </div>
                
             </div>
@@ -86,4 +97,4 @@ const mapStateToProps = ({favouriteGroups}:IReducer) => {
 
 
 
-export default connect(mapStateToProps, {fetchFavGroups})(FavPopup)
+export default connect(mapStateToProps, {fetchFavGroups,addFavouriteItem} )(FavPopup)
