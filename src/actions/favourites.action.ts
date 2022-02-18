@@ -22,3 +22,14 @@ export const fetchFavGroups = (userId = 1) => async (dispatch:ThunkDispatch<IRes
     _fetchFavGroups(userId,dispatch)
 
 }
+
+
+export const addFavouriteItem = (restaurant:IRestaurantsModel,favGrpId:number,userId:number = 1) => async (dispatch:ThunkDispatch<IRestaurantsModel, void, Action>,getState:any) => {
+  
+   delete restaurant.pageNum
+   delete restaurant.schedules
+    console.log({restaurant})
+    const response:any = await axiosRequest().post(`/user/${userId}/favourites/${favGrpId}/items`,{restaurant}).then((e)=>console.log(e))
+    .catch((err)=> console.log(">> Error",err))
+
+}
