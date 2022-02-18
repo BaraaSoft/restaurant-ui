@@ -8,7 +8,7 @@ const instance = Axios.create({
     // timeout: 10000,
 });
 
-const axiosRequest = (params:any)=>{
+const axiosRequest = (params?:any)=>{
     return Axios.create({
     baseURL: 'http://localhost:8080/api/v1',params});
 }

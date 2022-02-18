@@ -15,6 +15,18 @@ export interface ISchedules{
     restaurant:IRestaurantsModel
 }
 
+export interface IFavouriteItemModel {
+    id:number;
+    restaurant:IRestaurantsModel;
+    favGrpId?:number
+}
+
+export interface IFavouriteModel{
+    id:number;
+    name:string;
+    items:IFavouriteItemModel[]
+}
+
 export interface IAction<T>{
     payload:T
     type:any
@@ -23,6 +35,7 @@ export interface IAction<T>{
 export interface IReducer{
     restaurants:IRestaurantsModel[]
     pages:IPage
+    favouriteGroups:IFavouriteModel[]
 }
 
 export interface IPage{

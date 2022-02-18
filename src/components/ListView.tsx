@@ -9,6 +9,7 @@ import {
     IReducer,
     IRestaurantsModel,IPageable
 } from 'types';
+import FavPopup from './FavPopup';
 
 
 export interface ListViewProps{
@@ -64,9 +65,14 @@ const ListView = (props:ListViewProps):JSX.Element=>{
                         title={item.name}
                         description="This is eval restaurant"/>
                     
-                     <div style={{flex:4}}></div>
- 
-                    <Popover
+                     <div style={{flex:2}}></div>
+                     <FavPopup 
+                        restaurant={item}  
+                        visible={showPopover[item.id] || false}
+                        onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}
+                        onClose={(e)=>setPopOver({...showPopover,[item.id]:false})} />
+
+                    {/* <Popover
                         style={{width:"200px"}}
                         placement="leftTop"
                         content={<a onClick={()=>setPopOver({...showPopover,[item.id]:false})}>Close</a>}
@@ -75,7 +81,7 @@ const ListView = (props:ListViewProps):JSX.Element=>{
                         visible={showPopover[item.id] || false}
                         onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}>
                        <Button type="ghost" shape="circle" icon={<StarOutlined/>}></Button>
-                     </Popover>
+                     </Popover> */}
                     
                 </List.Item>)
             }
