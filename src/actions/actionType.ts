@@ -3,5 +3,6 @@ export default {
     HomePageMetaData:"HomePageMetaData",
     RestaurantsStartsWithName:"RestaurantsStartsWithName",
     RestaurantsWithTimeRange:"RestaurantsWithTimeRange",
-    ClearList:"ClearList"
+    ClearList:"ClearList",
+    AllFavouriteGroups:'AllFavouriteGroups'
 }
