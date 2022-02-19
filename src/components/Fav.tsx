@@ -5,7 +5,26 @@ import { IFavouriteItemModel, IFavouriteModel, IReducer } from 'types';
 import { connect } from 'react-redux';
 import {fetchFavGroups,fetchFavGroupItems} from 'actions';
 import { PlusOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
+
+
+const FavInupt = styled(Input)`
+    padding: 20px;
+    margin-right:12px;
+    padding-left: 28px;
+    width:'calc(100% - 200px)';
+    border-radius: 14px;
+    background-color:#fafafa;
+`;
+
+
+const InputGroup = styled(Input.Group)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+`;
 
 const { TabPane } = Tabs;
 
@@ -41,12 +60,15 @@ const FavView = (props:FavViewProps):JSX.Element=>{
 
     return(
         <div style={{height:540,overflowY:'scroll'}} >
-            <Input.Group style={{display:'flex',justifyContent:'center',alignItems:'center',marginBottom:'42px'}} >
-                <Input onChange={(e)=>setFavName(e.target.value)} bordered={false} size="large" style={{ marginRight:'12px',paddingLeft:'28px',width: 'calc(100% - 200px)',borderRadius:'10px',backgroundColor:'#FAFAFA' }} 
+            <InputGroup>
+                <FavInupt onChange={(e)=>setFavName(e.target.value)} 
+                    bordered={false} size="large"
                     placeholder="add new favourite group"/>
-                <Button onClick={onAddNewFavouriteGroup} size="middle" type="primary" shape="circle"  icon={<PlusOutlined />}  />
-            </Input.Group>
-            {/* <Divider/> */}
+                <Button onClick={onAddNewFavouriteGroup} 
+                    size="middle" type="primary" shape="circle" 
+                    icon={<PlusOutlined />}/>
+            </InputGroup>
+            <Divider/>
             <Tabs tabPosition="left" onChange={onTabChanged} >
                 {favouriteGroups?.map((favGrp,index)=>{
                     const filteredList = favouriteItems?.filter(item=>item.favGrpId==favGrp.id) 
