@@ -4,5 +4,6 @@ export default {
     RestaurantsStartsWithName:"RestaurantsStartsWithName",
     RestaurantsWithTimeRange:"RestaurantsWithTimeRange",
     ClearList:"ClearList",
-    AllFavouriteGroups:'AllFavouriteGroups'
+    AllFavouriteGroups:'AllFavouriteGroups',
+    AllFavouriteGroupItems:'AllFavouriteGroupItems'
 }
