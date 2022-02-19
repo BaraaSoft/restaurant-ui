@@ -36,6 +36,7 @@ export interface IReducer{
     restaurants:IRestaurantsModel[]
     pages:IPage
     favouriteGroups:IFavouriteModel[]
+    favouriteItems:IFavouriteItemModel[]
 }
 
 export interface IPage{
