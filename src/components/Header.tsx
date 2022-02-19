@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { PageHeader,Input,Select,TimePicker,Button} from 'antd';
+import { PageHeader,Input,Select,TimePicker,Button,Modal} from 'antd';
 import { connect } from 'react-redux';
 import {
     IReducer,
     IRestaurantsModel,IPageable
 } from 'types';
-import {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime} from 'actions'
+import {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime} from 'actions';
+import FavView from './Fav'
 
 const {Search} = Input;
 const { Option } = Select;
@@ -37,6 +38,7 @@ const Header = (props:HeaderProps):JSX.Element=>{
     const [searchTerm,setSearch] =useState<string|null>(null);
     const [timeRange,setTimeRange]=useState<string[] | null>();
     const [day,setDay] = useState<string>('Mon')
+    const [isFavVisible,setFavVisible] = useState<boolean>(false)
     const {fetchRestaurantsByName,fetchRestaurants,fetchRestaurantsByTime } = props
     const onSearch = (searchQuery:any)=>{
         setSearch(searchQuery)
@@ -62,8 +64,14 @@ const Header = (props:HeaderProps):JSX.Element=>{
     const onDaySelect = (e:string)=>{
         setDay(e)
     }
+
+    const onFavouritesClicked = (e:any)=>{
+        setFavVisible((e)=>!e)
+    }
+
     return (
-          <PageHeader
+        <>
+             <PageHeader
                 className="site-page-header"
                 title="Restaurants"
                 subTitle="Check for the available restaurants at given time"
@@ -84,12 +92,23 @@ const Header = (props:HeaderProps):JSX.Element=>{
                             allowClear
                             enterButton="Search"
                             onSearch={onSearch}/>
-                            <Button type="dashed" style={{marginLeft:10}} >Favourites</Button>
+                            <Button onClick={onFavouritesClicked} type="dashed" style={{marginLeft:10}} >Favourites</Button>
                       </Input.Group>,
                     
                       
     
                  ]}/>
+
+            <Modal
+                title="Your Favourites"
+                width={620}
+                closable={true}
+                visible={isFavVisible}
+                onCancel={onFavouritesClicked}
+                footer={null}>
+                <FavView/>
+            </Modal>
+        </>
     );
 }
 
