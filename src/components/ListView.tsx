@@ -71,18 +71,6 @@ const ListView = (props:ListViewProps):JSX.Element=>{
                         visible={showPopover[item.id] || false}
                         onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}
                         onDone={(e)=>setPopOver({...showPopover,[item.id]:false})} />
-
-                    {/* <Popover
-                        style={{width:"200px"}}
-                        placement="leftTop"
-                        content={<a onClick={()=>setPopOver({...showPopover,[item.id]:false})}>Close</a>}
-                        title="Add to favourites"
-                        trigger="click"
-                        visible={showPopover[item.id] || false}
-                        onVisibleChange={(e)=>setPopOver({...showPopover,[item.id]:e})}>
-                       <Button type="ghost" shape="circle" icon={<StarOutlined/>}></Button>
-                     </Popover> */}
-                    
                 </List.Item>)
             }
            />

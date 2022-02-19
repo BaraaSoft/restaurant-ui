@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { PageHeader,Input,Select,Popover,Button} from 'antd';
 import { connect } from 'react-redux';
 import {
+    IFavouriteItemModel,
     IFavouriteModel,
     IReducer,
     IRestaurantsModel
@@ -29,23 +30,28 @@ const FavPopup = (props:FavPopupProps):JSX.Element =>{
     const {fetchFavGroups,favouriteGroups,addFavouriteItem} = props
 
     const [selectedGroup,setSelectedGroup] = useState<IFavouriteModel[]>()
+    const [selectedGroupIds,setSelectedGroupIds] = useState<number[]>()
 
     useEffect(()=>{
         fetchFavGroups(1)
     },[])
 
-    const handleChange = (selItems:any) => setSelectedGroup(selItems)
+    const handleChange = (selItems:any,objArr:[{key:number,value:string}]) => {
+        const ids = objArr.map((x)=>x.key);
+        setSelectedGroupIds(ids) 
+        setSelectedGroup(selItems)
+    }
     const filteredOptions = favouriteGroups?.filter(o => !selectedGroup?.map(x=>x.id).includes(o.id));
 
     const handleAddToFav = ()=>{
-        if(favouriteGroups){
-            for(let grp of favouriteGroups){
-                addFavouriteItem?.call(null,restaurant,grp.id)
+        if(selectedGroupIds){
+            for(let grpId of selectedGroupIds){
+                addFavouriteItem?.call(null,restaurant,grpId)
             }
         }
         
         
-        onDone.bind(null,restaurant);
+        onDone.call(null,restaurant);
     }
 
     const renderContent = ()=>{
@@ -56,7 +62,7 @@ const FavPopup = (props:FavPopupProps):JSX.Element =>{
                     mode="multiple"
                     placeholder="Inserted are removed"
                     value={selectedGroup}
-                    onChange={handleChange}
+                    onChange={handleChange as any}
                     style={{ width: '100%' }}>
                     {filteredOptions?.map(item => (
                         <Select.Option key={item.id} value={item.name}>
