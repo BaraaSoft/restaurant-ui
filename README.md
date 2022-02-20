@@ -1,8 +1,5 @@
 # Restaurant UI react app 
 
-**Accessible App avaibale at**
-https://BaraaSoft/github.io/restaurant-ui
-
 # Available config
 
 To change Api url change active param in config.json with new end-point url.

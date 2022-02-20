@@ -2,7 +2,7 @@
   "name": "restaurant-ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://BaraaSoft/github.io/restaurant-ui",
+  "homepage": "https://baraaSoft.github.io/restaurant-ui/",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.16.2",
