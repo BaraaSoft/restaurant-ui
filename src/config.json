@@ -1,0 +1,5 @@
+{
+    "active":"http://178.128.30.105:8080/api/v1",
+    "serviceRemoteUrl":"http://178.128.30.105:8080/api/v1",
+    "serviceLocalUrl":"http://localhost:8080/api/v1"
+}
