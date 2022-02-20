@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/github.io/restaurant-ui/static/css/main.54e8a2d6.css",
+    "main.js": "/github.io/restaurant-ui/static/js/main.58ff2319.js",
+    "index.html": "/github.io/restaurant-ui/index.html",
+    "main.54e8a2d6.css.map": "/github.io/restaurant-ui/static/css/main.54e8a2d6.css.map",
+    "main.58ff2319.js.map": "/github.io/restaurant-ui/static/js/main.58ff2319.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.54e8a2d6.css",
+    "static/js/main.58ff2319.js"
+  ]
+}
