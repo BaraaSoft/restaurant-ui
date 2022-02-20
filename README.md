@@ -1,5 +1,7 @@
 # Restaurant UI react app 
 
+**Accessible App avaibale at**
+https://BaraaSoft/github.io/restaurant-ui
 
 # Available config
 
