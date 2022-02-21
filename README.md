@@ -1,5 +1,6 @@
 # Restaurant UI react app 
 
+### Deployed version available at  http://128.199.230.70:3000 
 # Available config
 
 To change Api url change active param in config.json with new end-point url.
